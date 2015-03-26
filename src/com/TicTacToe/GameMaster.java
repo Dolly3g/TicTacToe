@@ -1,5 +1,4 @@
 package com.TicTacToe;
-
 import java.util.Scanner;
 
 public class GameMaster {
@@ -11,12 +10,20 @@ public class GameMaster {
 
     public void runGame() {
         Scanner ui = new Scanner(System.in);
-        printBoard();
-        while(!game.isOver()){
+        showBoard();
+        while(!game.isOver() && !game.isWin()){
             playGame(ui);
-            printBoard();
-            if(game.isWin())break;
+            showBoard();
         }
+        declareGameOver();
+    }
+
+    private void declareGameOver() {
+        System.out.println("Game Over!");
+    }
+
+    private void declareWinner() {
+        System.out.println("You Won the Game!!");
     }
 
     private void playGame(Scanner ui) {
@@ -30,7 +37,7 @@ public class GameMaster {
         }
     }
 
-    private void printBoard() {
+    private void showBoard() {
         System.out.println(game.drawBoard());
     }
 }
