@@ -38,6 +38,7 @@ public class Game {
     }
 
     public boolean isWin() {
-        return board.isRowComplete(symbols[turn]);
+        return board.isComplete(WinningCondition.ROW , symbols[turn]) ||
+                board.isComplete(WinningCondition.COL, symbols[turn]);
     }
 }

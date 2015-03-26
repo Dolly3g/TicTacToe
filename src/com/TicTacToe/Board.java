@@ -46,16 +46,29 @@ public class Board {
         return true;
     }
 
-    public boolean isRowComplete(String symbol) {
-        for (int i = 0; i < SIZE; i++) {
-            boolean status = true;
+
+    public boolean isComplete(WinningCondition wc, String symbol) {
+        boolean status = true;
+        for (int i = 0; i < SIZE; i++,status = true) {
             for (int j = 0; j < SIZE; j++) {
-                if(!coordinates[i][j].equals(symbol))
-                    status = false;
+                status = getStatus(wc, symbol, status, i, j);
             }
-            if(status)
-                return true;
+            if (status) return true;
         }
         return false;
     }
+
+    private boolean getStatus(WinningCondition wc, String symbol, boolean status, int i, int j) {
+        status = (wc==WinningCondition.ROW) ?
+                checkSymbol(i,j, symbol, status) :
+                checkSymbol(j,i, symbol, status);
+        return status;
+    }
+
+    private boolean checkSymbol(int i, int j, String symbol, boolean status) {
+        if(!coordinates[j][i].equals(symbol))
+            status = false;
+        return status;
+    }
+
 }

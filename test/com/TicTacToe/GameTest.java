@@ -4,9 +4,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class GameTest {
 
@@ -113,7 +111,7 @@ public class GameTest {
         Game game = new Game();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                game.playAt(i,j);
+                game.playAt(i, j);
             }
         }
         assertTrue(game.isOver());
@@ -122,11 +120,11 @@ public class GameTest {
     @Test
     public void testisWinGivesTrueIfTheBoardHasAll_O_OnFirstRow() throws InvalidMoveException, OutOfBoardException {
         Game game = new Game();
-        game.playAt(0,0);
-        game.playAt(1,0);
-        game.playAt(0,1);
-        game.playAt(2,0);
-        game.playAt(0,2);
+        game.playAt(0, 0);
+        game.playAt(1, 0);
+        game.playAt(0, 1);
+        game.playAt(2, 0);
+        game.playAt(0, 2);
         assertTrue(game.isWin());
     }
 
@@ -150,5 +148,17 @@ public class GameTest {
         game.playAt(0, 2);
         game.playAt(2, 2);
         assertFalse(game.isWin());
+    }
+
+    @Test
+    public void testisWinGivesTrueIfTheBoardHasAll_O_OnFirstColumn() throws InvalidMoveException, OutOfBoardException {
+        Game game = new Game();
+        game.playAt(0, 0);
+        game.playAt(0, 1);
+        game.playAt(1, 0);
+        game.playAt(2, 2);
+        game.playAt(2, 0);
+        System.out.println(game.drawBoard());
+        assertTrue(game.isWin());
     }
 }
