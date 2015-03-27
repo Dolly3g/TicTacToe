@@ -160,4 +160,26 @@ public class GameTest {
         game.playAt(2, 0, "O");
         assertTrue(game.isWin("O"));
     }
+
+    @Test
+    public void testisWinGivesTrueIfTheBoardHasAll_O_OnLeftDiagonal() throws InvalidPlayException, OutOfBoardException {
+        Game game = new Game();
+        game.playAt(0, 0, "O");
+        game.playAt(0, 1, "X");
+        game.playAt(1, 1, "O");
+        game.playAt(2, 0, "X");
+        game.playAt(2, 2, "O");
+        assertTrue(game.isWin("O"));
+    }
+
+    @Test
+    public void testisWinGivesTrueIfTheBoardHasAll_O_OnRightDiagonal() throws InvalidPlayException, OutOfBoardException {
+        Game game = new Game();
+        game.playAt(0, 2, "O");
+        game.playAt(0, 1, "X");
+        game.playAt(1, 1, "O");
+        game.playAt(2, 2, "X");
+        game.playAt(2, 0, "O");
+        assertTrue(game.isWin("O"));
+    }
 }

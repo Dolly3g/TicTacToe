@@ -47,6 +47,7 @@ public class Board {
     }
 
 
+
     public boolean isComplete(WinningCondition wc, String symbol) {
         boolean status = true;
         for (int i = 0; i < SIZE; i++,status = true) {
@@ -71,4 +72,25 @@ public class Board {
         return status;
     }
 
+    public boolean isLeftDiagonalComplete(String symbol) {
+        for (int i = 0; i < SIZE ; i++) {
+            if(!coordinates[i][i].equals(symbol)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isRightDiagonalComplete(String symbol) {
+        for (int i = 0; i < SIZE ; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if(i+j == Math.ceil(SIZE/2.0)){
+                    if(!coordinates[i][j].equals(symbol)){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
 }

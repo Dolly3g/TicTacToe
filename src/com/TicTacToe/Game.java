@@ -35,6 +35,8 @@ public class Game {
 
     public boolean isWin(String symbol) {
         return board.isComplete(WinningCondition.ROW , symbol) ||
-                board.isComplete(WinningCondition.COL, symbol);
+                board.isComplete(WinningCondition.COL, symbol) ||
+                board.isLeftDiagonalComplete(symbol) ||
+                board.isRightDiagonalComplete(symbol);
     }
 }
