@@ -2,23 +2,19 @@ package com.TicTacToe;
 
 public class Game {
     private Board board;
-    private final static String[] symbols = {"O","X"};
-    private int turn;
 
     public Game() {
         board = new Board();
-        turn = 1;
     }
 
-    public void playAt(int row, int col) throws InvalidMoveException, OutOfBoardException {
-        turn = (turn == 0) ? 1 : 0;
+    public void playAt(int row, int col, String symbol) throws InvalidPlayException, OutOfBoardException {
         if (isOutOfBoard(row, col)){
             throw new OutOfBoardException("You cant play outside the Board!!");
         }
         if(!isValidMove(row, col)){
-            throw new InvalidMoveException("Invalid Move!!");
+            throw new InvalidPlayException("That has already been played!!");
         }
-        board.change(row,col,symbols[turn]);
+        board.change(row,col,symbol);
     }
 
     private boolean isOutOfBoard(int row, int col) {
@@ -37,8 +33,8 @@ public class Game {
         return board.draw();
     }
 
-    public boolean isWin() {
-        return board.isComplete(WinningCondition.ROW , symbols[turn]) ||
-                board.isComplete(WinningCondition.COL, symbols[turn]);
+    public boolean isWin(String symbol) {
+        return board.isComplete(WinningCondition.ROW , symbol) ||
+                board.isComplete(WinningCondition.COL, symbol);
     }
 }

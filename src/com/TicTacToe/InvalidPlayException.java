@@ -1,9 +1,9 @@
 package com.TicTacToe;
 
-public class InvalidMoveException extends Exception{
+public class InvalidPlayException extends Exception{
     String message;
 
-    public InvalidMoveException(String message) {
+    public InvalidPlayException(String message) {
         this.message = message;
     }
 
