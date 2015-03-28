@@ -1,65 +1,38 @@
 package com.TicTacToe;
 
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-
 public class GameMaster {
-    Game game;
-    private final static String[] symbols = {"O", "X"};
-    private int turn;
+    public static final String BANNER = "Tic-Tac-Toe\n";
+    Game game = new Game();
+    private boolean isFirstPlayersTurn = true;
 
-    public GameMaster() {
-        turn = 0;
-        game = new Game();
+    public String nextMove(Position position) {
+        String currentPlayer = isFirstPlayersTurn ? "X" : "O";
+        String nextPlayer = isFirstPlayersTurn ? "O" : "X";
+        String playErrorMessage = playGame(position, currentPlayer);
+        if (playErrorMessage != null)
+            return playErrorMessage;
+        isFirstPlayersTurn = !isFirstPlayersTurn;
+        return game.isWonBy(currentPlayer) ?
+                "Player " + currentPlayer + " Won the Game!!" :
+                "Player " + nextPlayer + ": ";
     }
 
-
-    public void runGame() {
-        Scanner ui = new Scanner(System.in);
-        showBoard();
-        while (!game.isOver()) {
-            if (game.isWin(symbols[turn])) {
-                declareWinner(symbols[turn]);
-            }
-            playGame(ui);
-            showBoard();
-        }
-        declareGameOver();
+    private String playGame(Position position, String symbol) {
+        Game.MarkResult result = game.mark(position.row, position.col, symbol);
+        if (result == Game.MarkResult.OutOfBoard)
+            return "You cant play outside the Board!!";
+        if (result == Game.MarkResult.AlreadyMarked)
+            return "That has already been played!!";
+        return null;
     }
 
-    private void declareGameOver() {
-        System.out.println("Game Tied! Try again! Hit Ctrl+F5");
+    public String showBoard() {
+        return game.drawBoard();
     }
 
-    private void declareWinner(String symbol) {
-        System.out.println("Player " + symbol + " Won the Game!!");
-        System.exit(0);
-    }
-
-    private void playGame(Scanner ui) {
-        try {
-            displayPlayer();
-            game.playAt(ui.nextInt(), ui.nextInt(), symbols[turn]);
-            switchTurn();
-        } catch (InvalidPlayException e) {
-            System.out.println(e.getMessage());
-        } catch (OutOfBoardException e) {
-            System.out.println(e.getMessage());
-        } catch (NoSuchElementException e) {
-            System.out.println("Game Abnormally Terminated!");
-            System.exit(1);
-        }
-    }
-
-    private void displayPlayer() {
-        System.out.print("Player " + symbols[turn] + ": ");
-    }
-
-    private void switchTurn() {
-        turn = (turn == 0) ? 1 : 0;
-    }
-
-    private void showBoard() {
-        System.out.println(game.drawBoard());
+    public boolean isGameOn() {
+        boolean finished = game.isOver() ||
+                game.isWonBy("X") || game.isWonBy("O");
+        return !finished;
     }
 }

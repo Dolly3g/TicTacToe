@@ -1,28 +1,17 @@
 package com.TicTacToe;
-
 public class Game {
-    private Board board;
-
-    public Game() {
-        board = new Board();
+    private Board board = new Board();
+    public enum MarkResult{
+        OutOfBoard,AlreadyMarked,OK
     }
-
-    public void playAt(int row, int col, String symbol) throws InvalidPlayException, OutOfBoardException {
-        if (isOutOfBoard(row, col)){
-            throw new OutOfBoardException("You cant play outside the Board!!");
-        }
-        if(!isValidMove(row, col)){
-            throw new InvalidPlayException("That has already been played!!");
-        }
-        board.change(row,col,symbol);
-    }
-
-    private boolean isOutOfBoard(int row, int col) {
-        return row >= board.getSize() || col >= board.getSize() || row < 0 || col < 0;
-    }
-
-    private boolean isValidMove(int row, int col) {
-        return board.isPlaceEmpty(row, col);
+    public MarkResult mark(int row, int col, String symbol) {
+        int size = board.getSize();
+        boolean isOutOfBoard = row >= size ||
+                col >= size || row < 0 || col < 0;
+        if (isOutOfBoard) return MarkResult.OutOfBoard;
+        if(!board.isPlaceEmpty(row, col)) return MarkResult.AlreadyMarked;
+        board.mark(row, col, symbol);
+        return MarkResult.OK;
     }
 
     public boolean isOver() {
@@ -33,7 +22,8 @@ public class Game {
         return board.draw();
     }
 
-    public boolean isWin(String symbol) {
+    //TODO: Combine 4 method calls and ask once
+    public boolean isWonBy(String symbol) {
         return board.isComplete(WinningCondition.ROW , symbol) ||
                 board.isComplete(WinningCondition.COL, symbol) ||
                 board.isLeftDiagonalComplete(symbol) ||

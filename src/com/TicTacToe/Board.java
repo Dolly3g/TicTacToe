@@ -28,7 +28,7 @@ public class Board {
         return board.toString();
     }
 
-    public void change(int row, int col, String symbol) {
+    public void mark(int row, int col, String symbol) {
         coordinates[row][col] = symbol;
     }
 
@@ -46,8 +46,6 @@ public class Board {
         return true;
     }
 
-
-
     public boolean isComplete(WinningCondition wc, String symbol) {
         boolean status = true;
         for (int i = 0; i < SIZE; i++,status = true) {
@@ -60,7 +58,7 @@ public class Board {
     }
 
     private boolean getStatus(WinningCondition wc, String symbol, boolean status, int i, int j) {
-        status = (wc==WinningCondition.ROW) ?
+        status = (wc == WinningCondition.ROW) ?
                 checkSymbol(i,j, symbol, status) :
                 checkSymbol(j,i, symbol, status);
         return status;
